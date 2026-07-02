@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تطبيق ويب متقدم لأبحاث الأسهم والأوراق المالية">
+    <meta name="theme-color" content="#1e40af">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231e40af' width='192' height='192'/><text x='50%' y='50%' font-size='80' fill='white' text-anchor='middle' dy='.3em' font-weight='bold'>E</text></svg>">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#1e40af">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="أبحاث الأسهم">
+    
+    <title>أبحاث الأسهم - PWA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .content {
+            margin: 30px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: right;
+        }
+        
+        .feature-icon {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .feature-text {
+            text-align: right;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-direction: column;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-left: 4px solid #1e40af;
+            border-radius: 5px;
+            text-align: right;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .status.online {
+            background: #f0fdf4;
+            border-left-color: #22c55e;
+        }
+        
+        .status.offline {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.online {
+            background: #22c55e;
+        }
+        
+        .status-indicator.offline {
+            background: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">📊</div>
+            <h1>أبحاث الأسهم</h1>
+            <p class="subtitle">تطبيق ويب متقدم - PWA</p>
+        </div>
+        
+        <div class="content">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">
+                    <strong>سريع جداً</strong><br>
+                    أداء عالي وتحميل فوري
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">
+                    <strong>يعمل بدون إنترنت</strong><br>
+                    استمتع بالتطبيق في أي مكان
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📥</div>
+                <div class="feature-text">
+                    <strong>قابل للتثبيت</strong><br>
+                    ثبته كتطبيق على هاتفك
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-text">
+                    <strong>آمن</strong><br>
+                    بيانات آمنة محمية
+                </div>
+            </div>
+        </div>
+        
+        <div class="status" id="status">
+            <span class="status-indicator online"></span>
+            <span id="status-text">متصل بالإنترنت</span>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn-primary" onclick="installApp()">ثبت التطبيق</button>
+            <button class="btn-secondary" onclick="shareApp()">شارك</button>
+        </div>
+    </div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(registration => {
+                    console.log('✅ Service Worker مسجل بنجاح:', registration);
+                })
+                .catch(error => {
+                    console.error('❌ خطأ في تسجيل Service Worker:', error);
+                });
+        }
+        
+        // متغير لتثبيت التطبيق
+        let deferredPrompt;
+        
+        // استقبال حدث beforeinstallprompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('💾 يمكن تثبيت التطبيق');
+        });
+        
+        // دالة تثبيت التطبيق
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ تم تثبيت التطبيق');
+                    } else {
+                        console.log('❌ تم رفض التثبيت');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('التطبيق مثبت بالفعل أو غير متاح على هذا الجهاز');
+            }
+        }
+        
+        // دالة المشاركة
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'أبحاث الأسهم',
+                    text: 'تطبيق ويب متقدم لأبحاث الأسهم - جربه الآن!',
+                    url: window.location.href
+                }).catch(err => console.log('خطأ في المشاركة:', err));
+            } else {
+                alert('المشاركة غير مدعومة على هذا الجهاز');
+            }
+        }
+        
+        // تحديث حالة الاتصال
+        function updateStatus() {
+            const statusEl = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+            
+            if (navigator.onLine) {
+                statusEl.classList.add('online');
+                statusEl.classList.remove('offline');
+                statusText.textContent = 'متصل بالإنترنت ✅';
+            } else {
+                statusEl.classList.add('offline');
+                statusEl.classList.remove('online');
+                statusText.textContent = 'غير متصل بالإنترنت ⚠️';
+            }
+        }
+        
+        window.addEventListener('online', updateStatus);
+        window.addEventListener('offline', updateStatus);
+        
+        // فحص الحالة عند التحميل
+        updateStatus();
+    </script>
+</body>
+</html>
