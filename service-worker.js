@@ -1,20 +1,20 @@
-// اسم الـ Cache
-const CACHE_NAME = 'equity-research-v1';
+// FinVal Pro - Service Worker
+const CACHE_NAME = 'finval-pro-v1';
 const ASSETS_TO_CACHE = [
   './',
-  './index.html',
+  './zai',
   './manifest.json',
   './service-worker.js'
 ];
 
-// 1. حدث التثبيت - تخزين الملفات
+// حدث التثبيت
 self.addEventListener('install', (event) => {
-  console.log('🔧 Service Worker: تثبيت...');
+  console.log('🔧 Service Worker: جاري التثبيت...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('💾 تخزين الملفات المهمة...');
+        console.log('💾 جاري تخزين الملفات الضرورية...');
         return cache.addAll(ASSETS_TO_CACHE);
       })
       .then(() => self.skipWaiting())
@@ -24,9 +24,9 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// 2. حدث التفعيل - تنظيف الـ Caches القديمة
+// حدث التفعيل
 self.addEventListener('activate', (event) => {
-  console.log('✨ Service Worker: تفعيل...');
+  console.log('✨ Service Worker: جاري التفعيل...');
   
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -42,8 +42,9 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. حدث الجلب - استراتيجية الـ Cache First
+// حدث الجلب - استراتيجية Cache First
 self.addEventListener('fetch', (event) => {
+  // تجاهل الطلبات غير HTTP/HTTPS
   if (!event.request.url.startsWith('http')) {
     return;
   }
@@ -51,11 +52,13 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
+        // من الـ cache أولاً
         if (response) {
           console.log(`✅ من Cache: ${event.request.url}`);
           return response;
         }
 
+        // ثم من الإنترنت
         return fetch(event.request)
           .then((response) => {
             if (!response || response.status !== 200 || response.type === 'error') {
@@ -74,12 +77,29 @@ self.addEventListener('fetch', (event) => {
           .catch((error) => {
             console.error(`❌ خطأ في الجلب: ${event.request.url}`, error);
             
+            // في حالة الفشل، حاول إرجاع الصفحة المحفوظة
             if (event.request.destination === 'document') {
-              return caches.match('./index.html');
+              return caches.match('./zai');
             }
           });
       })
   );
 });
 
-console.log('🚀 Service Worker جاهز!');
+// معالجة الرسائل
+self.addEventListener('message', (event) => {
+  console.log('📨 رسالة من الصفحة:', event.data);
+
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    caches.delete(CACHE_NAME).then(() => {
+      console.log('🗑️ تم حذف الـ cache');
+      event.ports[0].postMessage({ success: true });
+    });
+  }
+});
+
+console.log('🚀 FinVal Pro Service Worker جاهز!');
